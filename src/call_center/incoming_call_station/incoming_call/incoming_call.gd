@@ -9,7 +9,7 @@ signal line_input_released
 
 signal call_answered
 signal call_rejected
-
+signal call_connected
 
 # States
 const FREE = 0
@@ -19,7 +19,8 @@ const CALL_REJECTED = 3
 const CALL_CONNECTED = 4
 
 var state = CALL_INCOMING
-export(int) var calling_number = null
+export(String) var calling_number = null
+export(float) var animation_speed = 1
 
 # Nodes
 onready var leds = {
@@ -35,21 +36,15 @@ onready var line_input = $VBoxContainer/CallActionAndLineInput/LineInput
 onready var digits = $VBoxContainer/CallerNumberAndLed/CallerNumber.get_children()
 
 func _ready():
+	change_state(state)
 	setup_ui()
 
 func setup_digit():
 	if not calling_number:
 		return
 	
-	var digits_extracted = [
-		(calling_number / 1000) % 10,
-		(calling_number / 100) % 10,
-		(calling_number / 10) % 10,
-		(calling_number / 1) % 10
-	]
-	
 	for i in range(digits.size()):
-		digits[i].set_text(str(digits_extracted[i]))
+		digits[i].set_text(str(calling_number[i]))
 
 func setup_ui():
 	setup_digit()
@@ -79,15 +74,18 @@ func setup_ui():
 			show_led("blue")
 			disable_and_lower_opacity(reject_call)
 			disable_and_lower_opacity(answer_call)
-			disable(line_input)
+			disable(line_input, true)
 
 func disable_and_lower_opacity(obj):
 	disable(obj)
 	obj.modulate.a = 0.5
 
-func disable(obj):
+func disable(obj, fire_released = false):
 	obj.mouse_default_cursor_shape = CURSOR_ARROW
 	obj.disabled = true
+	
+	if fire_released:
+		_on_LineInput_button_up()
 
 func enable(obj):
 	obj.modulate.a = 1
@@ -101,11 +99,33 @@ func show_led(led_name):
 		else:
 			leds[led].visible = false
 
+func change_state(new_state):
+	state = new_state
+	
+	$AnimationPlayer.play("setup")
+	$AnimationPlayer.playback_speed = animation_speed
+	
+	if state == CALL_INCOMING:
+		$AnimationPlayer.play("incoming_call")
+	
+	setup_ui()
+
+func call_connected():
+	emit_signal("call_connected")
+	change_state(CALL_CONNECTED)
+
 func _on_LineInput_button_up():
-	emit_signal("line_input_released", id)
+	if Input.is_action_just_released("left_click"):
+		emit_signal("line_input_released", id)
 
 func _on_LineInput_button_down():
-	emit_signal("line_input_pressing", id)
+	if Input.is_action_just_pressed("left_click"):
+		emit_signal("line_input_pressing", id)
 
 func _on_RejectCall_pressed():
-	pass # replace with function body
+	emit_signal("call_rejected", id)
+	change_state(CALL_REJECTED)
+
+func _on_AnswerCall_pressed():
+	emit_signal("call_answered", id)
+	change_state(CALL_ANSWERED)

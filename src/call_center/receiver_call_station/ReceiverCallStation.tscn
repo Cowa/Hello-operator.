@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/call_center/common/station.png" type="Texture" id=1]
-[ext_resource path="res://src/call_center/receiver_call_station/receiver_call/ReceiverCall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/call_center/receiver_call_station/receiver_call_station.gd" type="Script" id=2]
+[ext_resource path="res://src/call_center/receiver_call_station/receiver_call/ReceiverCall.tscn" type="PackedScene" id=3]
 
 [node name="ReceiverCallStation" type="TextureRect"]
 
@@ -19,6 +20,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 1 )
 stretch_mode = 0
+script = ExtResource( 2 )
 
 [node name="GridContainer" type="GridContainer" parent="." index="0"]
 
@@ -56,7 +58,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall1" parent="GridContainer/CenterContainer1" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall1" parent="GridContainer/CenterContainer1" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -83,7 +85,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall2" parent="GridContainer/CenterContainer2" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall2" parent="GridContainer/CenterContainer2" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -110,7 +112,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall3" parent="GridContainer/CenterContainer3" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall3" parent="GridContainer/CenterContainer3" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -138,7 +140,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall4" parent="GridContainer/CenterContainer4" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall4" parent="GridContainer/CenterContainer4" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -165,7 +167,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall5" parent="GridContainer/CenterContainer5" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall5" parent="GridContainer/CenterContainer5" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -193,7 +195,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall6" parent="GridContainer/CenterContainer6" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall6" parent="GridContainer/CenterContainer6" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -220,7 +222,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall7" parent="GridContainer/CenterContainer7" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall7" parent="GridContainer/CenterContainer7" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0
@@ -248,7 +250,7 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall8" parent="GridContainer/CenterContainer8" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall8" parent="GridContainer/CenterContainer8" index="0" instance=ExtResource( 3 )]
 
 margin_left = 68.0
 margin_top = 40.0

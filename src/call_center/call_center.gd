@@ -1,5 +1,7 @@
 extends Control
 
+onready var phone_numbers = $PhoneNumberState
+
 onready var incoming_calls = [
 	$IncomingCallStation/VBoxContainer/CenterContainer1/IncomingCall1,
 	$IncomingCallStation/VBoxContainer/CenterContainer2/IncomingCall2,
@@ -39,6 +41,8 @@ func _ready():
 	for incoming_call in incoming_calls:
 		incoming_call.connect("line_input_released", self, "_on_line_input_released", [], CONNECT_DEFERRED)
 		incoming_call.connect("line_input_pressing", self, "_on_line_input_pressing", [], CONNECT_DEFERRED)
+	$Desk.fill_lists(phone_numbers.propaganda_list, phone_numbers.resistance_list)
+	$ReceiverCallStation.fill_receiver_numbers(phone_numbers.receiver_list)
 	
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -51,6 +55,7 @@ func _input(event):
 			if connecting_cables[i] and receiver:
 				connected_cables[i] = receiver
 				update_link_cable_curves(receiver.line_input_position(), link_cables[i])
+				incoming_calls[i].call_connected()
 
 func _on_line_input_released(incoming_call_id):
 	var local_id = incoming_call_id - 1
@@ -87,5 +92,4 @@ func get_connecting_receiver(mouse_position):
 	for receiver in receiver_calls:
 		if receiver.get_global_rect().has_point(mouse_position):
 			return receiver
-	
 	return null
