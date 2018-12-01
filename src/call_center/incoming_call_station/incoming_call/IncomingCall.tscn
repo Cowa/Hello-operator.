@@ -42,7 +42,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[node name="IncomingCall" type="Control" index="0"]
+[node name="IncomingCall" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -81,6 +81,7 @@ _sections_unfolded = [ "custom_constants" ]
 
 [node name="CallerNumberAndLed" type="HBoxContainer" parent="VBoxContainer" index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

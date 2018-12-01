@@ -39,7 +39,7 @@ size_flags_vertical = 1
 columns = 2
 _sections_unfolded = [ "Margin" ]
 
-[node name="CenterContainer" type="CenterContainer" parent="GridContainer" index="0"]
+[node name="CenterContainer1" type="CenterContainer" parent="GridContainer" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -56,13 +56,14 @@ size_flags_vertical = 3
 use_top_left = false
 _sections_unfolded = [ "Size Flags" ]
 
-[node name="ReceiverCall1" parent="GridContainer/CenterContainer" index="0" instance=ExtResource( 2 )]
+[node name="ReceiverCall1" parent="GridContainer/CenterContainer1" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 1
 
 [node name="CenterContainer2" type="CenterContainer" parent="GridContainer" index="1"]
 
@@ -85,10 +86,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall2" parent="GridContainer/CenterContainer2" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 2
 
 [node name="CenterContainer3" type="CenterContainer" parent="GridContainer" index="2"]
 
@@ -111,10 +113,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall3" parent="GridContainer/CenterContainer3" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 3
 
 [node name="CenterContainer4" type="CenterContainer" parent="GridContainer" index="3"]
 
@@ -138,10 +141,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall4" parent="GridContainer/CenterContainer4" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 4
 
 [node name="CenterContainer5" type="CenterContainer" parent="GridContainer" index="4"]
 
@@ -164,10 +168,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall5" parent="GridContainer/CenterContainer5" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 5
 
 [node name="CenterContainer6" type="CenterContainer" parent="GridContainer" index="5"]
 
@@ -191,10 +196,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall6" parent="GridContainer/CenterContainer6" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 6
 
 [node name="CenterContainer7" type="CenterContainer" parent="GridContainer" index="6"]
 
@@ -217,10 +223,11 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall7" parent="GridContainer/CenterContainer7" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 7
 
 [node name="CenterContainer8" type="CenterContainer" parent="GridContainer" index="7"]
 
@@ -244,9 +251,10 @@ _sections_unfolded = [ "Size Flags" ]
 [node name="ReceiverCall8" parent="GridContainer/CenterContainer8" index="0" instance=ExtResource( 2 )]
 
 margin_left = 68.0
-margin_top = 60.0
+margin_top = 40.0
 margin_right = 179.0
-margin_bottom = 176.0
+margin_bottom = 196.0
 _sections_unfolded = [ "Rect", "Size Flags" ]
+id = 8
 
 
