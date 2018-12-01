@@ -16,7 +16,7 @@ _data = {
 }
 _sections_unfolded = [ "Resource" ]
 
-[node name="CallCenter" type="Control" index="0"]
+[node name="CallCenter" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0

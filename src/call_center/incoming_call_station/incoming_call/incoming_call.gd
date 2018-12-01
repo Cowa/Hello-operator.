@@ -20,6 +20,7 @@ const CALL_CONNECTED = 4
 
 var state = FREE
 export(String) var calling_number = null
+export(int) var dialog_speed = 1
 
 var time_waiting_before_answering = 0
 var time_waiting_before_connecting_or_rejecting = 0
@@ -70,16 +71,20 @@ func setup_ui():
 			disable_and_lower_opacity(answer_call)
 			enable(reject_call)
 			enable(line_input)
+			$Dialog.visible = true
+			$Dialog/DialogAnimation.play("speaking")
 		CALL_REJECTED:
 			show_led("orange")
 			disable_and_lower_opacity(reject_call)
 			disable_and_lower_opacity(answer_call)
 			disable(line_input)
+			$Dialog/DialogAnimation.play("closing")
 		CALL_CONNECTED:
 			show_led("blue")
 			disable_and_lower_opacity(reject_call)
 			disable_and_lower_opacity(answer_call)
 			disable(line_input, true)
+			$Dialog/DialogAnimation.play("closing")
 
 func disable_and_lower_opacity(obj):
 	disable(obj)
