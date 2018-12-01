@@ -45,7 +45,7 @@ func _input(event):
 		for i in range(link_cables.size()):
 			if connecting_cables[i]:
 				update_link_cable_curves(event.position, link_cables[i])
-	elif not event.is_pressed() and event.button_index == BUTTON_LEFT:
+	elif event is InputEventMouseButton and not event.is_pressed() and event.button_index == BUTTON_LEFT:
 		for i in range(link_cables.size()):
 			var receiver = get_connecting_receiver(event.position)
 			if connecting_cables[i] and receiver:

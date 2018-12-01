@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/font_number_handwritten.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/call_center/common/LineInput.tscn" type="PackedScene" id=4]
 
-[node name="ReceiverCall" type="Control" index="0"]
+[node name="ReceiverCall" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
