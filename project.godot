@@ -10,7 +10,8 @@ config_version=3
 
 [application]
 
-config/name="Nouveau projet de jeu"
+config/name="LDJAM43"
+run/main_scene="res://src/call_center/CallCenter.tscn"
 config/icon="res://icon.png"
 
 [display]

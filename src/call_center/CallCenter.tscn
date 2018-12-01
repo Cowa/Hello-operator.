@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/call_center/desk/Desk.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/call_center/incoming_call_station/IncomingCallStation.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/call_center/receiver_call_station/ReceiverCallStation.tscn" type="PackedScene" id=3]
+
+[node name="CallCenter" type="Control"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Desk" parent="." index="0" instance=ExtResource( 1 )]
+
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -458.0
+margin_top = -725.0
+margin_right = 458.0
+margin_bottom = 0.0
+stretch_mode = 3
+_sections_unfolded = [ "Margin", "Size Flags" ]
+
+[node name="IncomingCallStation" parent="." index="1" instance=ExtResource( 2 )]
+
+margin_top = 64.0
+margin_right = 558.0
+margin_bottom = 1080.0
+
+[node name="ReceiverCallStation" parent="." index="2" instance=ExtResource( 3 )]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -558.0
+margin_top = -1016.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+
