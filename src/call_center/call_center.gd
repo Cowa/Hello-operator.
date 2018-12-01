@@ -25,25 +25,30 @@ onready var link_cables = [
 	$LinkCables/Cable3
 ]
 
-var connecting_cables = [
-	false,
-	false,
-	false
-]
+#### States
 
-var connected_cables = [
-	null,
-	null,
-	null
-]
+# Dragging cables
+var connecting_cables = [false, false, false]
+# Cables connected to...
+var connected_cables = [null, null, null]
+# At start, only on simltaneous call
+var simultaneous_call = 1
+# Number of calls managed
+var managed_call = 0
+var suspicious = 0
+
+#####
 
 func _ready():
 	for incoming_call in incoming_calls:
 		incoming_call.connect("line_input_released", self, "_on_line_input_released", [], CONNECT_DEFERRED)
 		incoming_call.connect("line_input_pressing", self, "_on_line_input_pressing", [], CONNECT_DEFERRED)
+		incoming_call.connect("call_rejected", self, "_on_call_rejected", [], CONNECT_DEFERRED)
+		incoming_call.connect("call_connected", self, "_on_call_connected", [], CONNECT_DEFERRED)
+		
 	$Desk.fill_lists(phone_numbers.propaganda_list, phone_numbers.resistance_list)
 	$ReceiverCallStation.fill_receiver_numbers(phone_numbers.receiver_list)
-	
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		for i in range(link_cables.size()):
@@ -55,7 +60,7 @@ func _input(event):
 			if connecting_cables[i] and receiver:
 				connected_cables[i] = receiver
 				update_link_cable_curves(receiver.line_input_position(), link_cables[i])
-				incoming_calls[i].call_connected()
+				incoming_calls[i].call_connected(receiver.number())
 
 func _on_line_input_released(incoming_call_id):
 	var local_id = incoming_call_id - 1
@@ -84,6 +89,35 @@ func _on_line_input_pressing(incoming_call_id):
 	
 	link_cable.update()
 
+func _on_call_rejected(incoming_call_id, calling_number):
+	var local_id = incoming_call_id - 1
+	connected_cables[local_id] = null
+	_on_line_input_released(incoming_call_id)
+	
+	if phone_numbers.is_propaganda(calling_number):
+		increase_suspicious(10)
+	elif phone_numbers.is_resistance(calling_number):
+		decrease_suspicious(25)
+	# Reject neutral number is suspect
+	else:
+		increase_suspicious(5)
+	
+	managed_call += 1
+
+func _on_call_connected(incoming_call_id, calling_number):
+	var local_id = incoming_call_id - 1
+	connected_cables[local_id] = null
+	_on_line_input_released(incoming_call_id)
+		
+	if phone_numbers.is_propaganda(calling_number):
+		decrease_suspicious(10)
+	elif phone_numbers.is_resistance(calling_number):
+		increase_suspicious(30)
+	else:
+		decrease_suspicious(5)
+	
+	managed_call += 1
+
 func update_link_cable_curves(mouse_position, link_cable):
 	link_cable.curve.set_point_position(1, mouse_position)
 	link_cable.update()
@@ -93,3 +127,46 @@ func get_connecting_receiver(mouse_position):
 		if receiver.get_global_rect().has_point(mouse_position):
 			return receiver
 	return null
+
+func adjust_difficulty():
+	var new_simultaneous = 0
+	if managed_call < 2:
+		new_simultaneous = 1
+	elif managed_call < 10:
+		new_simultaneous = 2
+	else:
+		new_simultaneous = 3
+	simultaneous_call = new_simultaneous
+
+func increase_suspicious(added):
+	suspicious += added
+	
+	if suspicious > 100:
+		suspicious = 100
+	
+	# todo update progress bar
+
+func decrease_suspicious(added):
+	suspicious -= added
+	
+	if suspicious < 0:
+		suspicious = 0
+	
+	# todo update progress bar
+
+func maybe_send_call():
+	adjust_difficulty()
+	
+	var free_calls = []
+	for call in incoming_calls:
+		if call.is_free():
+			free_calls.append(call)
+	
+	var ongoing_call_number = incoming_calls.size() - free_calls.size()
+	
+	if ongoing_call_number < simultaneous_call:
+		var choosen_call = utils.choose(free_calls)
+		choosen_call.ringing(phone_numbers.generate_new_number())
+
+func _on_TimeTicking_timeout():
+	maybe_send_call()

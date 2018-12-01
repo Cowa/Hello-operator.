@@ -14,6 +14,10 @@ config/name="LDJAM43"
 run/main_scene="res://src/call_center/CallCenter.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+utils="*res://src/utils.gd"
+
 [display]
 
 window/size/width=1920

@@ -116,11 +116,11 @@ size_flags_vertical = 1
 script = ExtResource( 1 )
 _sections_unfolded = [ "Rect" ]
 id = 0
-calling_number = "1324"
-animation_speed = 1.0
+calling_number = ""
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." index="0"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -139,7 +139,6 @@ _sections_unfolded = [ "custom_constants" ]
 
 [node name="CallerNumberAndLed" type="HBoxContainer" parent="VBoxContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -280,6 +279,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 [node name="NotificationLED" type="CenterContainer" parent="VBoxContainer/CallerNumberAndLed" index="1"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -512,6 +512,27 @@ anims/setup = SubResource( 2 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
+[node name="TimePassing" type="Timer" parent="." index="2"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="RejectCallTimer" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[node name="ConnectCallTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = false
+
 [connection signal="pressed" from="VBoxContainer/CallActionAndLineInput/CenterContainer/RejectCall" to="." method="_on_RejectCall_pressed"]
 
 [connection signal="button_down" from="VBoxContainer/CallActionAndLineInput/LineInput" to="." method="_on_LineInput_button_down"]
@@ -519,5 +540,7 @@ _sections_unfolded = [ "Playback Options" ]
 [connection signal="button_up" from="VBoxContainer/CallActionAndLineInput/LineInput" to="." method="_on_LineInput_button_up"]
 
 [connection signal="pressed" from="VBoxContainer/CallActionAndLineInput/CenterContainer2/AnswerCall" to="." method="_on_AnswerCall_pressed"]
+
+[connection signal="timeout" from="TimePassing" to="." method="_on_TimePassing_timeout"]
 
 

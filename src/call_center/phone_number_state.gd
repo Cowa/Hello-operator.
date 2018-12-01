@@ -1,5 +1,7 @@
 extends Node
 
+signal call_generated
+
 var propaganda_list = []
 var resistance_list = []
 var receiver_list = []
@@ -35,3 +37,9 @@ func generate_new_number():
 	while is_already_generated(new_number):
 		new_number = generate_number()
 	return new_number
+
+func is_propaganda(number):
+	return number in propaganda_list
+
+func is_resistance(number):
+	return number in resistance_list

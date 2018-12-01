@@ -152,4 +152,13 @@ script = ExtResource( 7 )
 resistance_list_size = 8
 propaganda_list_size = 6
 
+[node name="TimeTicking" type="Timer" parent="." index="7"]
+
+process_mode = 1
+wait_time = 5.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="TimeTicking" to="." method="_on_TimeTicking_timeout"]
+
 

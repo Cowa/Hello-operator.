@@ -7,3 +7,6 @@ func _ready():
 
 func line_input_position():
 	return $LineInput.get_global_rect().position + ($LineInput.get_global_rect().size / Vector2(2, 2))
+
+func number():
+	return $ReceiverNumber/Label.text

@@ -11,18 +11,20 @@ signal call_answered
 signal call_rejected
 signal call_connected
 
-# States
+###### States
 const FREE = 0
 const CALL_INCOMING = 1
 const CALL_ANSWERED = 2
 const CALL_REJECTED = 3
 const CALL_CONNECTED = 4
 
-var state = CALL_INCOMING
+var state = FREE
 export(String) var calling_number = null
-export(float) var animation_speed = 1
 
-# Nodes
+var time_waiting_before_answering = 0
+var time_waiting_before_connecting_or_rejecting = 0
+
+###### Nodes
 onready var leds = {
 	"white": $VBoxContainer/CallerNumberAndLed/NotificationLED/WhiteLED,
 	"blue": $VBoxContainer/CallerNumberAndLed/NotificationLED/BlueLED,
@@ -41,9 +43,12 @@ func _ready():
 
 func setup_digit():
 	if not calling_number:
+		for i in range(digits.size()):
+			digits[i].modulate.a = 0
 		return
 	
 	for i in range(digits.size()):
+		digits[i].modulate.a = 1
 		digits[i].set_text(str(calling_number[i]))
 
 func setup_ui():
@@ -99,20 +104,47 @@ func show_led(led_name):
 		else:
 			leds[led].visible = false
 
+func adjust_animation_speed():
+	if time_waiting_before_answering < 5:
+		return 2
+	elif time_waiting_before_answering < 10:
+		return 4
+	elif time_waiting_before_answering < 15:
+		return 8
+	else:
+		return 10
+
 func change_state(new_state):
 	state = new_state
 	
+	$AnimationPlayer.playback_speed = adjust_animation_speed()
 	$AnimationPlayer.play("setup")
-	$AnimationPlayer.playback_speed = animation_speed
+	
+	if state in [FREE, CALL_REJECTED, CALL_CONNECTED]:
+		$TimePassing.stop()
 	
 	if state == CALL_INCOMING:
 		$AnimationPlayer.play("incoming_call")
+		$TimePassing.start()
+	
+	if state == FREE:
+		# Reset time counter
+		time_waiting_before_answering = 0
+		time_waiting_before_connecting_or_rejecting = 0
+		calling_number = null
 	
 	setup_ui()
 
-func call_connected():
-	emit_signal("call_connected")
-	change_state(CALL_CONNECTED)
+func ringing(caller_number):
+	calling_number = caller_number
+	$TimePassing.start()
+	change_state(CALL_INCOMING)
+
+func is_free():
+	return state == FREE
+
+func is_busy():
+	return not is_free()
 
 func _on_LineInput_button_up():
 	if Input.is_action_just_released("left_click"):
@@ -122,10 +154,30 @@ func _on_LineInput_button_down():
 	if Input.is_action_just_pressed("left_click"):
 		emit_signal("line_input_pressing", id)
 
+##### END CALL
+
 func _on_RejectCall_pressed():
-	emit_signal("call_rejected", id)
+	$RejectCallTimer.start()
 	change_state(CALL_REJECTED)
+	yield($RejectCallTimer, "timeout")
+	emit_signal("call_rejected", id, calling_number)
+	change_state(FREE)
+
+func call_connected(with_number):
+	change_state(CALL_CONNECTED)
+	$ConnectCallTimer.start()
+	yield($ConnectCallTimer, "timeout")
+	emit_signal("call_connected", id, calling_number)
+	change_state(FREE)
+#####
 
 func _on_AnswerCall_pressed():
 	emit_signal("call_answered", id)
 	change_state(CALL_ANSWERED)
+
+func _on_TimePassing_timeout():
+	if state == CALL_INCOMING:
+		time_waiting_before_answering += $TimePassing.wait_time
+		$AnimationPlayer.playback_speed = adjust_animation_speed()
+	elif state == CALL_ANSWERED:
+		time_waiting_before_connecting_or_rejecting += $TimePassing.wait_time
