@@ -127,7 +127,7 @@ tracks/3/keys = {
 "values": [ Vector2( 1362, 64 ), Vector2( 2039, 68 ) ]
 }
 
-[node name="CallCenter" type="Control" index="0"]
+[node name="CallCenter" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
