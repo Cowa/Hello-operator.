@@ -134,6 +134,9 @@ func change_state(new_state):
 	
 	if state in [FREE, CALL_REJECTED, CALL_CONNECTED]:
 		$TimePassing.stop()
+		calling_number = null
+		dialog_cursor = 0
+		dialogs = []
 	
 	if state == CALL_INCOMING:
 		$AnimationPlayer.play("incoming_call")
@@ -143,7 +146,7 @@ func change_state(new_state):
 		# Reset time counter
 		time_waiting_before_answering = 0
 		time_waiting_before_connecting_or_rejecting = 0
-		calling_number = null
+		
 	
 	setup_ui()
 
@@ -162,8 +165,14 @@ func is_busy():
 	return not is_free()
 
 func play_dialog():
+	if dialogs.size() == 0:
+		return
+	
 	dialog_content.text = dialogs[dialog_cursor]
 	$Dialog/DialogAnimation.play("speaking")
+	
+	if dialogs.size() == 1:
+		return
 	
 	if dialog_cursor + 1 < dialogs.size():
 		yield($Dialog/DialogAnimation, "animation_finished")
@@ -172,6 +181,8 @@ func play_dialog():
 		$Dialog/NextDialogTimer.start()
 		yield($Dialog/NextDialogTimer, "timeout")
 		
+		if not state in [CALL_ANSWERED]:
+			return
 		$Dialog/DialogAnimation.play("closing")
 		yield($Dialog/DialogAnimation, "animation_finished")
 		
@@ -193,6 +204,7 @@ func _on_RejectCall_pressed():
 	yield($RejectCallTimer, "timeout")
 	emit_signal("call_rejected", id, calling_number)
 	change_state(FREE)
+	$Dialog/NextDialogTimer.stop()
 
 func call_connected(with_number):
 	change_state(CALL_CONNECTED)
@@ -200,6 +212,8 @@ func call_connected(with_number):
 	yield($ConnectCallTimer, "timeout")
 	emit_signal("call_connected", id, calling_number)
 	change_state(FREE)
+	$Dialog/NextDialogTimer.stop()
+
 #####
 
 func _on_AnswerCall_pressed():
