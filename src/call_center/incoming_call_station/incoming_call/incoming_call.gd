@@ -165,7 +165,7 @@ func is_busy():
 	return not is_free()
 
 func play_dialog():
-	if dialogs.size() == 0:
+	if dialogs.size() == 0 or dialog_cursor + 1 > dialogs.size():
 		return
 	
 	dialog_content.text = dialogs[dialog_cursor]
@@ -199,18 +199,22 @@ func _on_LineInput_button_down():
 ##### END CALL
 
 func _on_RejectCall_pressed():
+	var calling_number_tmp = calling_number
 	$RejectCallTimer.start()
 	change_state(CALL_REJECTED)
 	yield($RejectCallTimer, "timeout")
-	emit_signal("call_rejected", id, calling_number)
+	emit_signal("call_rejected", id, calling_number_tmp)
 	change_state(FREE)
 	$Dialog/NextDialogTimer.stop()
 
 func call_connected(with_number):
+	var correct_receiver = wanted_receiver == with_number
+	var calling_number_tmp = calling_number
+	
 	change_state(CALL_CONNECTED)
 	$ConnectCallTimer.start()
 	yield($ConnectCallTimer, "timeout")
-	emit_signal("call_connected", id, calling_number)
+	emit_signal("call_connected", id, calling_number_tmp, correct_receiver)
 	change_state(FREE)
 	$Dialog/NextDialogTimer.stop()
 

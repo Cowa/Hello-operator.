@@ -48,6 +48,7 @@ func _ready():
 		
 	$Desk.fill_lists(phone_numbers.propaganda_list, phone_numbers.resistance_list)
 	$ReceiverCallStation.fill_receiver_numbers(phone_numbers.receiver_list)
+	$Wall/SuspiciousMeter.update_meter(suspicious)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -95,7 +96,7 @@ func _on_call_rejected(incoming_call_id, calling_number):
 	_on_line_input_released(incoming_call_id)
 	
 	if phone_numbers.is_propaganda(calling_number):
-		increase_suspicious(10)
+		increase_suspicious(25)
 	elif phone_numbers.is_resistance(calling_number):
 		decrease_suspicious(25)
 	# Reject neutral number is suspect
@@ -104,19 +105,30 @@ func _on_call_rejected(incoming_call_id, calling_number):
 	
 	managed_call += 1
 
-func _on_call_connected(incoming_call_id, calling_number):
+func _on_call_connected(incoming_call_id, calling_number, correct_receiver):
 	var local_id = incoming_call_id - 1
 	connected_cables[local_id] = null
 	_on_line_input_released(incoming_call_id)
-		
-	if phone_numbers.is_propaganda(calling_number):
-		decrease_suspicious(10)
-	elif phone_numbers.is_resistance(calling_number):
-		increase_suspicious(30)
-	else:
-		decrease_suspicious(5)
 	
-	managed_call += 1
+	if correct_receiver:
+		print("correctly connected")
+		print(calling_number)
+		print(correct_receiver)
+		if phone_numbers.is_propaganda(calling_number):
+			decrease_suspicious(10)
+		elif phone_numbers.is_resistance(calling_number):
+			increase_suspicious(30)
+		else:
+			decrease_suspicious(5)
+		managed_call += 1
+	else:
+		print("NOT correctly connected")
+		if phone_numbers.is_propaganda(calling_number):
+			increase_suspicious(10)
+		elif phone_numbers.is_resistance(calling_number):
+			increase_suspicious(15)
+		else:
+			increase_suspicious(10)
 
 func update_link_cable_curves(mouse_position, link_cable):
 	link_cable.curve.set_point_position(1, mouse_position)
@@ -144,7 +156,7 @@ func increase_suspicious(added):
 	if suspicious > 100:
 		suspicious = 100
 	
-	# todo update progress bar
+	$Wall/SuspiciousMeter.update_meter(suspicious)
 
 func decrease_suspicious(added):
 	suspicious -= added
@@ -152,7 +164,7 @@ func decrease_suspicious(added):
 	if suspicious < 0:
 		suspicious = 0
 	
-	# todo update progress bar
+	$Wall/SuspiciousMeter.update_meter(suspicious)
 
 func generate_call():
 	# caller number, receiver number, dialog, (speed dialog?)
@@ -163,7 +175,7 @@ func generate_call():
 		dialogs = []
 	}
 	
-	if utils.odds(5):
+	if utils.odds(4):
 		if utils.odds(2):
 			call.caller_number = utils.choose(phone_numbers.resistance_list)
 			call.caller_type = "resistance"
