@@ -1,0 +1,109 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/day_result/DayResult.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/day_result/gameover.gd" type="Script" id=2]
+[ext_resource path="res://assets/TravelingTypewriter.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="GameOver" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="TextureRect" parent="." index="0"]
+
+modulate = Color( 0.972656, 0.710495, 0.710495, 1 )
+_sections_unfolded = [ "Mouse", "Rect", "Visibility" ]
+
+[node name="ResultTitle" parent="TextureRect" index="0"]
+
+margin_left = 21.0
+margin_top = 26.0
+margin_right = -25.0
+margin_bottom = 103.0
+custom_fonts/font = SubResource( 1 )
+text = "FIRED ON DAY %D"
+
+[node name="Work" parent="TextureRect" index="1"]
+
+margin_top = 124.0
+margin_bottom = 188.0
+
+[node name="SuccessfulCalls" parent="TextureRect" index="2"]
+
+margin_top = 189.0
+margin_bottom = 228.0
+
+[node name="PropagandaCalls" parent="TextureRect" index="3"]
+
+margin_top = 239.0
+margin_bottom = 278.0
+
+[node name="ResistanceCalls" parent="TextureRect" index="4"]
+
+margin_top = 287.0
+margin_bottom = 326.0
+
+[node name="RejectedPropaganda" parent="TextureRect" index="5"]
+
+margin_top = 333.0
+margin_bottom = 372.0
+
+[node name="RejectedResistance" parent="TextureRect" index="6"]
+
+margin_top = 390.0
+margin_bottom = 429.0
+
+[node name="MissedCalls" parent="TextureRect" index="7"]
+
+margin_top = 445.0
+margin_bottom = 484.0
+
+[node name="FailedCall" parent="TextureRect" index="8"]
+
+editor/display_folded = true
+margin_top = 491.0
+margin_bottom = 530.0
+
+[node name="Karma" parent="TextureRect" index="9"]
+
+margin_top = 595.0
+margin_bottom = 655.0
+
+[node name="LiveSaved" parent="TextureRect" index="10"]
+
+margin_top = 654.0
+margin_bottom = 693.0
+
+[node name="LiveSacrificed" parent="TextureRect" index="11"]
+
+margin_top = 701.0
+margin_bottom = 740.0
+
+[node name="PropagandaGrowth" parent="TextureRect" index="12"]
+
+margin_top = 750.0
+margin_bottom = 789.0
+
+[node name="ScoreKarma" parent="TextureRect" index="13"]
+
+margin_top = 824.0
+margin_bottom = 884.0
+
+[node name="ScoreWork" parent="TextureRect" index="14"]
+
+margin_top = 540.0
+margin_bottom = 604.0
+
+[node name="NextDayButton" parent="TextureRect" index="15"]
+
+margin_top = 870.0
+margin_bottom = 917.0
+
+

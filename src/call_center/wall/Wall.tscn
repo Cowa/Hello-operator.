@@ -143,7 +143,8 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 1 )
-text = "TIME REMAINING"
+text = "TIME REMAINING
+DAY %D OUT OF 3"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0

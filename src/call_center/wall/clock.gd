@@ -1,5 +1,8 @@
 extends TextureRect
 
+func _ready():
+	$Label.text = $Label.text.replace("%D", state.data.current_day)
+
 func update_time(time):
 	var minutes = str(time / 60)
 	var seconds = str(time % 60)

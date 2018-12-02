@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/day_result/day_result.gd" type="Script" id=1]
 [ext_resource path="res://src/day_result/result_paper.png" type="Texture" id=2]
 [ext_resource path="res://assets/TravelingTypewriter.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://src/day_result/button_next.png" type="Texture" id=4]
+[ext_resource path="res://assets/ModernSans-Light.otf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -36,7 +38,77 @@ use_filter = true
 font_data = ExtResource( 3 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="DayResult" type="Control" index="0"]
+[sub_resource type="DynamicFont" id=6]
+
+size = 25
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 5 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="Animation" id=5]
+
+resource_name = "entrance"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -841, 40 ), Vector2( 641, 64 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureRect:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 180.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+
+resource_name = "leave"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 641, 64 ), Vector2( -841, 40 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureRect:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+
+[node name="DayResult" type="Control"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -44,11 +116,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 0
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
+_sections_unfolded = [ "Mouse" ]
 __meta__ = {
 "_edit_lock_": true
 }
@@ -65,13 +138,13 @@ margin_right = 319.0
 margin_bottom = 476.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-mouse_filter = 1
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 2 )
 stretch_mode = 0
-_sections_unfolded = [ "Rect" ]
+_sections_unfolded = [ "Mouse", "Rect" ]
 
 [node name="ResultTitle" type="Label" parent="TextureRect" index="0"]
 
@@ -80,9 +153,9 @@ anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
 margin_left = 50.0
-margin_top = 37.0
+margin_top = 30.0
 margin_right = -50.0
-margin_bottom = 101.0
+margin_bottom = 107.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -106,9 +179,9 @@ anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
 margin_left = 49.0
-margin_top = 147.0
+margin_top = 120.0
 margin_right = -51.0
-margin_bottom = 211.0
+margin_bottom = 184.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -131,9 +204,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 81.0
-margin_top = 212.0
+margin_top = 185.0
 margin_right = 378.0
-margin_bottom = 251.0
+margin_bottom = 224.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -181,9 +254,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 83.0
-margin_top = 262.0
+margin_top = 235.0
 margin_right = 393.0
-margin_bottom = 301.0
+margin_bottom = 274.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -225,14 +298,15 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="ResistanceCalls" type="Label" parent="TextureRect" index="4"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 85.0
-margin_top = 310.0
+margin_top = 283.0
 margin_right = 395.0
-margin_bottom = 349.0
+margin_bottom = 322.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -274,14 +348,15 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="RejectedPropaganda" type="Label" parent="TextureRect" index="5"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 83.0
-margin_top = 356.0
+margin_top = 329.0
 margin_right = 435.0
-margin_bottom = 395.0
+margin_bottom = 368.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -329,9 +404,9 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 83.0
-margin_top = 413.0
+margin_top = 386.0
 margin_right = 435.0
-margin_bottom = 452.0
+margin_bottom = 425.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -373,14 +448,15 @@ _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="MissedCalls" type="Label" parent="TextureRect" index="7"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 83.0
-margin_top = 468.0
+margin_top = 441.0
 margin_right = 435.0
-margin_bottom = 507.0
+margin_bottom = 480.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -420,7 +496,56 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="Karma" type="Label" parent="TextureRect" index="8"]
+[node name="FailedCall" type="Label" parent="TextureRect" index="8"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 83.0
+margin_top = 487.0
+margin_right = 435.0
+margin_bottom = 526.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "- Failed calls:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="Label" type="Label" parent="TextureRect/FailedCall" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 240.0
+margin_top = -15.0
+margin_right = 518.0
+margin_bottom = 49.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.742188, 0.168152, 0.168152, 1 )
+text = "0"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="Karma" type="Label" parent="TextureRect" index="9"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -444,7 +569,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="LiveSaved" type="Label" parent="TextureRect" index="9"]
+[node name="LiveSaved" type="Label" parent="TextureRect" index="10"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -494,7 +619,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="LiveSacrificed" type="Label" parent="TextureRect" index="10"]
+[node name="LiveSacrificed" type="Label" parent="TextureRect" index="11"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -544,7 +669,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="PropagandaGrowth" type="Label" parent="TextureRect" index="11"]
+[node name="PropagandaGrowth" type="Label" parent="TextureRect" index="12"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -594,16 +719,17 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="ScoreKarma" type="Label" parent="TextureRect" index="12"]
+[node name="ScoreKarma" type="Label" parent="TextureRect" index="13"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = 267.0
-margin_top = 831.0
-margin_right = -215.0
-margin_bottom = 891.0
+margin_left = 190.0
+margin_top = 820.0
+margin_right = -292.0
+margin_bottom = 880.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -641,16 +767,17 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="ScoreWork" type="Label" parent="TextureRect" index="13"]
+[node name="ScoreWork" type="Label" parent="TextureRect" index="14"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 0.0
-margin_left = 277.0
-margin_top = 532.0
-margin_right = -205.0
-margin_bottom = 596.0
+margin_left = 221.0
+margin_top = 536.0
+margin_right = -261.0
+margin_bottom = 600.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -688,5 +815,67 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
+
+[node name="NextDayButton" type="TextureButton" parent="TextureRect" index="15"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 469.0
+margin_top = 869.0
+margin_right = 596.0
+margin_bottom = 916.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+_sections_unfolded = [ "Mouse", "Textures" ]
+
+[node name="Label" type="Label" parent="TextureRect/NextDayButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 4.0
+margin_top = 9.0
+margin_right = 124.0
+margin_bottom = 39.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 6 )
+text = "Next day"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+
+root_node = NodePath("..")
+autoplay = "entrance"
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/entrance = SubResource( 5 )
+anims/leave = SubResource( 7 )
+blend_times = [  ]
+
+[connection signal="pressed" from="TextureRect/NextDayButton" to="." method="_on_NextDayButton_pressed"]
 
 
