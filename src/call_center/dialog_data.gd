@@ -235,7 +235,7 @@ var propaganda_dialogs = [
 		"Operator. Connect me with XXXX."
 	],
 	[
-		"[coughing] ... [coughing] ... [coughing]",
+		"[coughing] ... [coughing]",
 		"Sorry operator. [intense coughing] ... XXXX please [coughing]"
 	],
 	[
@@ -253,5 +253,40 @@ var propaganda_dialogs = [
 		"Ha-ha and yet they feel protected! [distant laughs and voices] - ha-ha",
 		"Oh- Sorry operator [laughs continue] ... XXXX please."
 	],
-	
+	[
+		"Hello operator. Militia officer speaking. [distant rifle shots]",
+		"Let me call XXXX please."
+	],
+	[
+		"Hello operator. It's propaganda. I'm calling XXXX, please."
+	],
+	[
+		"Operator. Still me. Yes that my job... anyway I'm calling 25-...",
+		"No sorry wrong number, it's XXXX I want to contact. Thanks."
+	],
+	[
+		"Hello operator. Still a few calls to make. This time it's XXXX."
+	],
+	[
+		"Hello operator. I know you can remember my voice now...",
+		"... well I'm happy to have a job at least. Link me to XXXX."
+	],
+	[
+		"Operator. Do you agree with... No... [coughing]",
+		"Did you heard about the resistance? Their actions...",
+		"... are getting stronger. Link me to XXXX please."
+	],
+	[
+		"Hello operator. So the smoke has no impact on our health!",
+		"I am relieved! Let me call XXXX, please operator."
+	],
+	[
+		"Hi operator. Yeah me again... I know... Link to XXXX please."
+	],
+	[
+		"Good day operator. Link to XXXX please."
+	],
+	[
+		"Hello operator. To XXXX please. And hurry. Thank you."
+	]
 ]
