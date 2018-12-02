@@ -37,6 +37,8 @@ var simultaneous_call = 1
 var managed_call = 0
 var suspicious = 0
 
+export(int) var time_remaining = 300
+
 #####
 
 func _ready():
@@ -49,6 +51,7 @@ func _ready():
 	$Desk.fill_lists(phone_numbers.propaganda_list, phone_numbers.resistance_list)
 	$ReceiverCallStation.fill_receiver_numbers(phone_numbers.receiver_list)
 	$Wall/SuspiciousMeter.update_meter(suspicious)
+	$Wall/Clock.update_time(time_remaining)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -222,5 +225,14 @@ func maybe_send_call():
 		var generated_call = generate_call()
 		choosen_call.ringing(generated_call)
 
-func _on_TimeTicking_timeout():
+func _on_NewCallTimer_timeout():
 	maybe_send_call()
+
+func _on_TimeClicking_timeout():
+	time_remaining -= 1
+	
+	if time_remaining < 0:
+		print("no time left")
+		return
+	
+	$Wall/Clock.update_time(time_remaining)

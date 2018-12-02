@@ -17,7 +17,7 @@ _data = {
 }
 _sections_unfolded = [ "Resource" ]
 
-[node name="CallCenter" type="Control"]
+[node name="CallCenter" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -30,13 +30,14 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 script = ExtResource( 1 )
+time_remaining = 300
 
 [node name="Wall" parent="." index="0" instance=ExtResource( 2 )]
 
-margin_left = 629.0
-margin_top = 30.0
-margin_right = 1259.0
-margin_bottom = 184.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -379.0
+margin_right = 376.0
 
 [node name="Desk" parent="." index="1" instance=ExtResource( 3 )]
 
@@ -82,6 +83,9 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 _sections_unfolded = [ "Mouse" ]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Cable1" type="Line2D" parent="LinkCables" index="0"]
 
@@ -157,7 +161,7 @@ script = ExtResource( 7 )
 resistance_list_size = 8
 propaganda_list_size = 6
 
-[node name="TimeTicking" type="Timer" parent="." index="7"]
+[node name="NewCallTimer" type="Timer" parent="." index="7"]
 
 process_mode = 1
 wait_time = 2.0
@@ -168,6 +172,15 @@ autostart = true
 
 script = ExtResource( 8 )
 
-[connection signal="timeout" from="TimeTicking" to="." method="_on_TimeTicking_timeout"]
+[node name="TimeClicking" type="Timer" parent="." index="9"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="NewCallTimer" to="." method="_on_NewCallTimer_timeout"]
+
+[connection signal="timeout" from="TimeClicking" to="." method="_on_TimeClicking_timeout"]
 
 
