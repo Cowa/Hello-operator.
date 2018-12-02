@@ -3,6 +3,7 @@ extends Control
 func _ready():
 	$AnimationPlayer.play("entrance")
 	yield($AnimationPlayer, "animation_finished")
+	$AnimationPlayer.playback_speed = 2
 	$AnimationPlayer.play("ringing")
 
 func _on_Button_pressed():

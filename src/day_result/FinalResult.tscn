@@ -113,7 +113,6 @@ margin_bottom = 895.0
 
 [node name="ScoreWork" parent="TextureRect" index="14"]
 
-editor/display_folded = false
 margin_left = 296.0
 margin_top = 483.0
 margin_right = -186.0

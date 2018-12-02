@@ -115,7 +115,7 @@ var neutral_dialogs = [
 	],
 	[
 		"Hello operator. I think I forgot how the sun looks like... Is it bad?",
-		"... [coughing] nevermind [coughing]. I'm calling [coughing] XXXX."
+		"... nevermind [coughing]. I'm calling [coughing] XXXX."
 	],
 	[
 		"Hello operator. Lines must be saturated. It's no surprise since the war.",
