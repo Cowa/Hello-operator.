@@ -193,7 +193,7 @@ func generate_call():
 		dialogs = []
 	}
 	
-	if utils.odds(3):
+	if utils.odds(2):
 		if utils.odds(2):
 			call.caller_number = utils.choose(phone_numbers.resistance_list)
 			call.caller_type = "resistance"

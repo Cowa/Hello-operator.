@@ -37,8 +37,8 @@ mouse_filter = 1
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-alignment = 0
-_sections_unfolded = [ "Margin" ]
+alignment = 1
+_sections_unfolded = [ "Margin", "Mouse" ]
 
 [node name="CenterContainer1" type="CenterContainer" parent="VBoxContainer" index="0"]
 
@@ -63,7 +63,7 @@ margin_left = 85.0
 margin_top = 64.0
 margin_right = 412.0
 margin_bottom = 252.0
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
 id = 1
 
 [node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer" index="1"]
@@ -90,7 +90,7 @@ margin_left = 85.0
 margin_top = 64.0
 margin_right = 412.0
 margin_bottom = 252.0
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
 id = 2
 
 [node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer" index="2"]
@@ -117,7 +117,7 @@ margin_left = 85.0
 margin_top = 64.0
 margin_right = 412.0
 margin_bottom = 252.0
-_sections_unfolded = [ "Rect", "Size Flags" ]
+_sections_unfolded = [ "Anchor", "Grow Direction", "Margin", "Rect", "Size Flags" ]
 id = 3
 
 

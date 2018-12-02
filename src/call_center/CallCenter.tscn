@@ -127,7 +127,7 @@ tracks/3/keys = {
 "values": [ Vector2( 1362, 64 ), Vector2( 2039, 68 ) ]
 }
 
-[node name="CallCenter" type="Control"]
+[node name="CallCenter" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -183,7 +183,6 @@ _sections_unfolded = [ "Rect" ]
 
 [node name="LinkCables" type="Container" parent="." index="4"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -201,7 +200,6 @@ __meta__ = {
 
 [node name="Cable1" type="Line2D" parent="LinkCables" index="0"]
 
-position = Vector2( 0, 36 )
 points = PoolVector2Array(  )
 width = 40.0
 default_color = Color( 0.137255, 0.137255, 0.12549, 1 )
@@ -209,7 +207,7 @@ texture_mode = 644786592
 sharp_limit = 2.0
 round_precision = 15
 script = ExtResource( 6 )
-_sections_unfolded = [ "Border", "Capping", "Fill" ]
+_sections_unfolded = [ "Border", "Capping", "Fill", "Transform" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable1" index="0"]
 
@@ -225,11 +223,10 @@ points = PoolVector2Array(  )
 width = 40.0
 default_color = Color( 0.137255, 0.137255, 0.12549, 1 )
 texture_mode = 644786592
-joint_mode = 2
 sharp_limit = 2.0
 round_precision = 15
 script = ExtResource( 6 )
-_sections_unfolded = [ "Border", "Capping" ]
+_sections_unfolded = [ "Border", "Capping", "Fill", "Transform" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable2" index="0"]
 
@@ -248,7 +245,7 @@ texture_mode = 644786592
 sharp_limit = 2.0
 round_precision = 15
 script = ExtResource( 6 )
-_sections_unfolded = [ "Border", "Capping" ]
+_sections_unfolded = [ "Border", "Capping", "Fill", "Transform" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable3" index="0"]
 
