@@ -4,8 +4,8 @@ func empty_day():
 	return {
 			neutral_call = 0,
 			propaganda_call = 0,
-			resistance_call = 5,
-			rejected_propaganda = 5,
+			resistance_call = 0,
+			rejected_propaganda = 0,
 			rejected_resistance = 0,
 			missed_call = 0,
 			failed_call = 0

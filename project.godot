@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="Hello operator."
-run/main_scene="res://src/call_center/CallCenter.tscn"
+run/main_scene="res://src/Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
