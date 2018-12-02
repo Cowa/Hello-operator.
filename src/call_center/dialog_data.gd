@@ -28,6 +28,47 @@ var neutral_dialogs = [
 		"[cat meowing] ... [cat meowing] ... Hello operator- [cat meowing]",
 		"Sorry about my cat, she likes to talk a lot- [cat meowing] Anyway...",
 		"Can you connect me with XXXX please? Have a good day."
+	],
+	[
+		"He-Hello operator. I'm looking to contact XXXX. Can you help me?"
+	],
+	[
+		"Hi operator. I'm waiting to be contacted by a company...",
+		"I'm scared that they forget about me... It would not be the first time",
+		"So anyway, I'd like to contact them. Their number is XXXX. Thanks"
+	],
+	[
+		"Bonjour opérateur. Can you connect me with- [static noises] -errr...",
+		"connect [static noises] XXXX. Please operator- [static noises]"
+	],
+	[
+		"Hey operator, pass me to XXXX. He is expecting me ASAP. Thanks."
+	],
+	[
+		"Hello operator. Is your work hard? It must be exhausting to listen...",
+		"... all of these incoming calls. I can't imagine how it is.",
+		"Apologies for the disturbance... I'm calling XXXX please."
+	],
+	[
+		"Hi. XXXX."
+	],
+	[
+		"[inaudible voice] ... XXXX."
+	],
+	[
+		"Hello operator. Who are you defenders of the universe? It's cold here.",
+		"I heard horrible things these days... Can you link me with XXXX ? Please."
+	],
+	[
+		"Hello ope-ope-ope-rator. C-c-c-an you please-eee. XXXX th-ank you."
+	],
+	[
+		"[distant siren] Hello operator, connect me with XXXX please."
+	],
+	[
+		"Good day operator. It's been a while since I used a phone.",
+		"So I need to tell you the contact number. That's it? Okay... [silence]",
+		"Okay... If I'm not wrong... this should be XXXX. Thanks I guess."
 	]
 ]
 

@@ -100,15 +100,15 @@ func _on_call_rejected(incoming_call_id, calling_number):
 	_on_line_input_released(incoming_call_id)
 	
 	if phone_numbers.is_propaganda(calling_number):
-		increase_suspicious(25)
 		state.inc_rejected_propaganda()
+		increase_suspicious(25)
 	elif phone_numbers.is_resistance(calling_number):
 		state.inc_rejected_resistance()
 		decrease_suspicious(25)
 	# Reject neutral number is suspect
 	else:
-		increase_suspicious(5)
 		state.inc_failed_call()
+		increase_suspicious(5)
 	
 	managed_call += 1
 
@@ -119,8 +119,8 @@ func _on_call_connected(incoming_call_id, calling_number, correct_receiver):
 	
 	if correct_receiver:
 		if phone_numbers.is_propaganda(calling_number):
-			decrease_suspicious(10)
 			state.inc_propaganda()
+			decrease_suspicious(10)
 		elif phone_numbers.is_resistance(calling_number):
 			state.inc_resistance()
 			increase_suspicious(30)
