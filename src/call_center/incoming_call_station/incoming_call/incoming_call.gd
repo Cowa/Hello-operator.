@@ -10,6 +10,7 @@ signal line_input_released
 signal call_answered
 signal call_rejected
 signal call_connected
+signal call_timeout
 
 ###### States
 const FREE = 0
@@ -117,11 +118,17 @@ func show_led(led_name):
 			leds[led].visible = false
 
 func adjust_animation_speed():
-	if time_waiting_before_answering < 5:
+	var base = 0
+	if state == CALL_INCOMING:
+		base = time_waiting_before_answering
+	elif state == CALL_ANSWERED:
+		base = time_waiting_before_connecting_or_rejecting
+	
+	if base < 10:
 		return 2
-	elif time_waiting_before_answering < 10:
+	elif base < 20:
 		return 4
-	elif time_waiting_before_answering < 15:
+	elif base < 30:
 		return 8
 	else:
 		return 10
@@ -129,7 +136,6 @@ func adjust_animation_speed():
 func change_state(new_state):
 	state = new_state
 	
-	$AnimationPlayer.playback_speed = adjust_animation_speed()
 	$AnimationPlayer.play("setup")
 	
 	if state in [FREE, CALL_REJECTED, CALL_CONNECTED]:
@@ -141,13 +147,16 @@ func change_state(new_state):
 	if state == CALL_INCOMING:
 		$AnimationPlayer.play("incoming_call")
 		$TimePassing.start()
-	
-	if state == FREE:
+	elif state == FREE:
 		# Reset time counter
 		time_waiting_before_answering = 0
 		time_waiting_before_connecting_or_rejecting = 0
-		
-	
+	elif state == CALL_ANSWERED:
+		$TimePassing.start()
+		time_waiting_before_answering = 0
+		$AnimationPlayer.play("answered_call")
+
+	$AnimationPlayer.playback_speed = adjust_animation_speed()
 	setup_ui()
 
 func ringing(call_data):
@@ -205,7 +214,6 @@ func _on_RejectCall_pressed():
 	yield($RejectCallTimer, "timeout")
 	emit_signal("call_rejected", id, calling_number_tmp)
 	change_state(FREE)
-	$Dialog/NextDialogTimer.stop()
 
 func call_connected(with_number):
 	var correct_receiver = wanted_receiver == with_number
@@ -216,7 +224,11 @@ func call_connected(with_number):
 	yield($ConnectCallTimer, "timeout")
 	emit_signal("call_connected", id, calling_number_tmp, correct_receiver)
 	change_state(FREE)
-	$Dialog/NextDialogTimer.stop()
+
+func timeout_call():
+	var calling_number_tmp = calling_number
+	change_state(FREE)
+	emit_signal("call_timeout", id)
 
 #####
 
@@ -227,6 +239,14 @@ func _on_AnswerCall_pressed():
 func _on_TimePassing_timeout():
 	if state == CALL_INCOMING:
 		time_waiting_before_answering += $TimePassing.wait_time
-		$AnimationPlayer.playback_speed = adjust_animation_speed()
+		
+		if time_waiting_before_answering > 30:
+			timeout_call()
+		
 	elif state == CALL_ANSWERED:
 		time_waiting_before_connecting_or_rejecting += $TimePassing.wait_time
+		
+		if time_waiting_before_connecting_or_rejecting > 30:
+			$Dialog/DialogAnimation.play("closing")
+			timeout_call()
+	$AnimationPlayer.playback_speed = adjust_animation_speed()

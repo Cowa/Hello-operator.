@@ -47,7 +47,8 @@ func _ready():
 		incoming_call.connect("line_input_pressing", self, "_on_line_input_pressing", [], CONNECT_DEFERRED)
 		incoming_call.connect("call_rejected", self, "_on_call_rejected", [], CONNECT_DEFERRED)
 		incoming_call.connect("call_connected", self, "_on_call_connected", [], CONNECT_DEFERRED)
-		
+		incoming_call.connect("call_timeout", self, "_on_call_timeout", [], CONNECT_DEFERRED)
+	
 	$Desk.fill_lists(phone_numbers.propaganda_list, phone_numbers.resistance_list)
 	$ReceiverCallStation.fill_receiver_numbers(phone_numbers.receiver_list)
 	$Wall/SuspiciousMeter.update_meter(suspicious)
@@ -132,6 +133,11 @@ func _on_call_connected(incoming_call_id, calling_number, correct_receiver):
 			increase_suspicious(15)
 		else:
 			increase_suspicious(10)
+
+func _on_call_timeout(incoming_call_id):
+	var local_id = incoming_call_id - 1
+	connected_cables[local_id] = null
+	increase_suspicious(10)
 
 func update_link_cable_curves(mouse_position, link_cable):
 	link_cable.curve.set_point_position(1, mouse_position)
