@@ -124,14 +124,10 @@ func adjust_animation_speed():
 	elif state == CALL_ANSWERED:
 		base = time_waiting_before_connecting_or_rejecting
 	
-	if base < 10:
+	if base < 25:
 		return 2
-	elif base < 20:
-		return 4
-	elif base < 30:
-		return 8
 	else:
-		return 10
+		return 8
 
 func change_state(new_state):
 	state = new_state
