@@ -154,6 +154,46 @@ func decrease_suspicious(added):
 	
 	# todo update progress bar
 
+func generate_call():
+	# caller number, receiver number, dialog, (speed dialog?)
+	var call = {
+		caller_type = null,
+		caller_number = null,
+		receiver_number = utils.choose(phone_numbers.receiver_list),
+		dialogs = []
+	}
+	
+	if utils.odds(5):
+		if utils.odds(2):
+			call.caller_number = utils.choose(phone_numbers.resistance_list)
+			call.caller_type = "resistance"
+		else:
+			call.caller_number = utils.choose(phone_numbers.propaganda_list)
+			call.caller_type = "propaganda"
+	else:
+		call.caller_number = phone_numbers.generate_new_number()
+		call.caller_type = "neutral"
+	
+	call.dialogs = generate_dialogs(call)
+	return call
+
+func generate_dialogs(call):
+	var dialogs = []
+	match call.caller_type:
+		"resistance":
+			dialogs = utils.choose($DialogData.resistance_dialogs)
+		"propaganda":
+			dialogs = utils.choose($DialogData.propaganda_dialogs)
+		"neutral":
+			dialogs = utils.choose($DialogData.neutral_dialogs)
+	
+	var dialog_parsed = []
+	# replace XXXX with receiver number
+	for d in dialogs:
+		dialog_parsed.append(d.replace("XXXX", call.receiver_number))
+	
+	return dialog_parsed
+
 func maybe_send_call():
 	adjust_difficulty()
 	
@@ -165,8 +205,10 @@ func maybe_send_call():
 	var ongoing_call_number = incoming_calls.size() - free_calls.size()
 	
 	if ongoing_call_number < simultaneous_call:
+		var call_data = generate_call()
 		var choosen_call = utils.choose(free_calls)
-		choosen_call.ringing(phone_numbers.generate_new_number())
+		var generated_call = generate_call()
+		choosen_call.ringing(generated_call)
 
 func _on_TimeTicking_timeout():
 	maybe_send_call()

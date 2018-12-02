@@ -22,6 +22,10 @@ var state = FREE
 export(String) var calling_number = null
 export(int) var dialog_speed = 1
 
+var dialogs = []
+var dialog_cursor = 0
+var wanted_receiver = null
+
 var time_waiting_before_answering = 0
 var time_waiting_before_connecting_or_rejecting = 0
 
@@ -37,6 +41,8 @@ onready var reject_call = $VBoxContainer/CallActionAndLineInput/CenterContainer/
 onready var answer_call = $VBoxContainer/CallActionAndLineInput/CenterContainer2/AnswerCall
 onready var line_input = $VBoxContainer/CallActionAndLineInput/LineInput
 onready var digits = $VBoxContainer/CallerNumberAndLed/CallerNumber.get_children()
+
+onready var dialog_content = $Dialog/Content
 
 func _ready():
 	change_state(state)
@@ -72,7 +78,8 @@ func setup_ui():
 			enable(reject_call)
 			enable(line_input)
 			$Dialog.visible = true
-			$Dialog/DialogAnimation.play("speaking")
+			play_dialog()
+			
 		CALL_REJECTED:
 			show_led("orange")
 			disable_and_lower_opacity(reject_call)
@@ -140,8 +147,11 @@ func change_state(new_state):
 	
 	setup_ui()
 
-func ringing(caller_number):
-	calling_number = caller_number
+func ringing(call_data):
+	calling_number = call_data.caller_number
+	dialog_cursor = 0
+	dialogs = call_data.dialogs
+	wanted_receiver = call_data.receiver_number
 	$TimePassing.start()
 	change_state(CALL_INCOMING)
 
@@ -150,6 +160,22 @@ func is_free():
 
 func is_busy():
 	return not is_free()
+
+func play_dialog():
+	dialog_content.text = dialogs[dialog_cursor]
+	$Dialog/DialogAnimation.play("speaking")
+	
+	if dialog_cursor + 1 < dialogs.size():
+		yield($Dialog/DialogAnimation, "animation_finished")
+		
+		dialog_cursor += 1
+		$Dialog/NextDialogTimer.start()
+		yield($Dialog/NextDialogTimer, "timeout")
+		
+		$Dialog/DialogAnimation.play("closing")
+		yield($Dialog/DialogAnimation, "animation_finished")
+		
+		play_dialog()
 
 func _on_LineInput_button_up():
 	if Input.is_action_just_released("left_click"):

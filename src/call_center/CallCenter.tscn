@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/call_center/call_center.gd" type="Script" id=1]
 [ext_resource path="res://src/call_center/wall/Wall.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://src/call_center/receiver_call_station/ReceiverCallStation.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/call_center/link_cable.gd" type="Script" id=6]
 [ext_resource path="res://src/call_center/phone_number_state.gd" type="Script" id=7]
+[ext_resource path="res://src/call_center/dialog_data.gd" type="Script" id=8]
 
 [sub_resource type="Curve2D" id=1]
 
@@ -16,7 +17,7 @@ _data = {
 }
 _sections_unfolded = [ "Resource" ]
 
-[node name="CallCenter" type="Control"]
+[node name="CallCenter" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -87,11 +88,12 @@ _sections_unfolded = [ "Mouse" ]
 position = Vector2( 0, 36 )
 points = PoolVector2Array(  )
 width = 40.0
-default_color = Color( 0.00650024, 0.00811978, 0.0117188, 1 )
+default_color = Color( 0.0745098, 0.0862745, 0.0980392, 1 )
 texture_mode = 644786592
 sharp_limit = 2.0
-round_precision = 8
+round_precision = 15
 script = ExtResource( 6 )
+_sections_unfolded = [ "Border", "Capping", "Fill" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable1" index="0"]
 
@@ -105,11 +107,13 @@ _sections_unfolded = [ "Transform" ]
 
 points = PoolVector2Array(  )
 width = 40.0
-default_color = Color( 0, 0, 0, 1 )
+default_color = Color( 0.0745098, 0.0862745, 0.0980392, 1 )
 texture_mode = 644786592
+joint_mode = 2
 sharp_limit = 2.0
-round_precision = 8
+round_precision = 15
 script = ExtResource( 6 )
+_sections_unfolded = [ "Border", "Capping" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable2" index="0"]
 
@@ -123,11 +127,12 @@ _sections_unfolded = [ "Transform" ]
 
 points = PoolVector2Array(  )
 width = 40.0
-default_color = Color( 0, 0, 0, 1 )
+default_color = Color( 0.0745098, 0.0862745, 0.0980392, 1 )
 texture_mode = 644786592
 sharp_limit = 2.0
-round_precision = 8
+round_precision = 15
 script = ExtResource( 6 )
+_sections_unfolded = [ "Border", "Capping" ]
 
 [node name="Curve" type="Path2D" parent="LinkCables/Cable3" index="0"]
 
@@ -155,9 +160,13 @@ propaganda_list_size = 6
 [node name="TimeTicking" type="Timer" parent="." index="7"]
 
 process_mode = 1
-wait_time = 5.0
+wait_time = 2.0
 one_shot = false
 autostart = true
+
+[node name="DialogData" type="Node" parent="." index="8"]
+
+script = ExtResource( 8 )
 
 [connection signal="timeout" from="TimeTicking" to="." method="_on_TimeTicking_timeout"]
 
